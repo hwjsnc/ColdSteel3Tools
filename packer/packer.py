@@ -47,18 +47,20 @@ def pack(path=None, projectName=None, mode=0):
                                 length += 1
                             elif schema[key] == 's':
                                 length += 2
+                            elif schema[key] == 'S':
+                                length += 2
                             elif schema[key] == 'i' or schema[key] == 'f':
                                 length += 4
                             elif schema[key] == 't':
                                 length += len(entry[key].encode('utf-8')) + 1
-                            elif schema[key] == 'd':
+                            elif schema[key].startswith('d'):
                                 length += len(entry[key].split(' '))
                         dataFile.write(header.encode('utf-8'))
                         dataFile.write(b'\x00')
                         dataFile.write(length.to_bytes(2, 'little'))
 
                         for key in fieldNames:
-                            if schema[key] == 'd':
+                            if schema[key].startswith('d'):
                                 hexText = entry[key]
                                 hexText = hexText.replace(' ', '')
                                 byteText = bytes.fromhex(hexText)
@@ -67,6 +69,8 @@ def pack(path=None, projectName=None, mode=0):
                                 dataFile.write(int(entry[key]).to_bytes(1, 'little'))
                             elif schema[key] == 's':
                                 dataFile.write(int(entry[key]).to_bytes(2, 'little'))
+                            elif schema[key] == 'S':
+                                dataFile.write(int(entry[key]).to_bytes(2, 'little', signed=True))
                             elif schema[key] == 'i':
                                 dataFile.write(int(entry[key]).to_bytes(4, 'little'))
                             elif schema[key] == 'f':
@@ -98,18 +102,20 @@ def pack(path=None, projectName=None, mode=0):
                                                 length += 1
                                             elif moduleSchema[subKey] == 's':
                                                 length += 2
+                                            elif moduleSchema[subKey] == 'S':
+                                                length += 2
                                             elif moduleSchema[subKey] == 'i' or moduleSchema[subKey] == 'f':
                                                 length += 4
                                             elif moduleSchema[subKey] == 't':
                                                 length += len(subEntry[subKey].encode('utf-8')) + 1
-                                            elif moduleSchema[subKey] == 'd':
+                                            elif moduleSchema[subKey].startswith('d'):
                                                 length += len(subEntry[subKey].split(' '))
                                         dataFile.write(moduleName.encode('utf-8'))
                                         dataFile.write(b'\x00')
                                         dataFile.write(length.to_bytes(2, 'little'))
 
                                         for subKey in subFieldNames:
-                                            if moduleSchema[subKey] == 'd':
+                                            if moduleSchema[subKey].startswith('d'):
                                                 hexText = subEntry[subKey]
                                                 hexText = hexText.replace(' ', '')
                                                 byteText = bytes.fromhex(hexText)
@@ -118,6 +124,8 @@ def pack(path=None, projectName=None, mode=0):
                                                 dataFile.write(int(subEntry[subKey]).to_bytes(1, 'little'))
                                             elif moduleSchema[subKey] == 's':
                                                 dataFile.write(int(subEntry[subKey]).to_bytes(2, 'little'))
+                                            elif moduleSchema[subKey] == 'S':
+                                                dataFile.write(int(subEntry[subKey]).to_bytes(2, 'little', signed=True))
                                             elif moduleSchema[subKey] == 'i':
                                                 dataFile.write(int(subEntry[subKey]).to_bytes(4, 'little'))
                                             elif moduleSchema[subKey] == 'f':

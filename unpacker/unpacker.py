@@ -65,15 +65,20 @@ def unpack(path=None, projectName=None):
                         row = {}
 
                         for key in fieldNames:
-                            if schema[key] == 'd':
-                                hexText = headerData.read().hex()
+                            if schema[key].startswith('d'):
+                                if len(schema[key]) > 1:
+                                    n = int(schema[key][1:])
+                                    hexText = headerData.read(n).hex()
+                                else:
+                                    hexText = headerData.read().hex()
                                 hexText = ' '.join(hexText[j:j+2] for j in range(0, len(hexText), 2)).upper()
                                 rowData.append(hexText)
-                                break
                             elif schema[key] == 'b':
                                 rowData.append(int.from_bytes(headerData.read(1), 'little'))
                             elif schema[key] == 's':
                                 rowData.append(int.from_bytes(headerData.read(2), 'little'))
+                            elif schema[key] == 'S':
+                                rowData.append(int.from_bytes(headerData.read(2), 'little', signed=True))
                             elif schema[key] == 'i':
                                 rowData.append(int.from_bytes(headerData.read(4), 'little'))
                             elif schema[key] == 'f':
@@ -125,15 +130,20 @@ def unpack(path=None, projectName=None):
                                         subRow = {}
 
                                         for subKey in subFieldNames:
-                                            if moduleSchema[subKey] == 'd':
-                                                hexText = subData.read().hex()
+                                            if schema[key].startswith('d'):
+                                                if len(schema[key]) > 1:
+                                                    n = int(schema[key][1:])
+                                                    hexText = headerData.read(n).hex()
+                                                else:
+                                                    hexText = headerData.read().hex()
                                                 hexText = ' '.join(hexText[j:j+2] for j in range(0, len(hexText), 2)).upper()
-                                                subRowData.append(hexText)
-                                                break
+                                                subrowData.append(hexText)
                                             elif moduleSchema[subKey] == 'b':
                                                 subRowData.append(int.from_bytes(subData.read(1), 'little'))
                                             elif moduleSchema[subKey] == 's':
                                                 subRowData.append(int.from_bytes(subData.read(2), 'little'))
+                                            elif moduleSchema[subKey] == 'S':
+                                                subRowData.append(int.from_bytes(subData.read(2), 'little', signed=True))
                                             elif moduleSchema[subKey] == 'i':
                                                 subRowData.append(int.from_bytes(subData.read(4), 'little'))
                                             elif moduleSchema[subKey] == 'f':
