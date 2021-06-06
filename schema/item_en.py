@@ -4,7 +4,28 @@ item = {
     "flags" : "t",
     "unknown" : "s",
     "category" : "b",
-    "data" : "d"
+    "data_1": "d8",
+    "float_1": "f",
+    "data_2": "d5",
+    "float_2": "f",
+    "float_3": "f",
+    "effect_id": "s",
+    "effect_parameter": "s",
+    "data_3": "d2",
+    "short_1": "s",
+    "data_4": "d18",
+    "short_2": "s",
+    "data_6" : "d6",
+    "short_3": "s",
+    "data" : "d54",
+    "price?": "s",
+    "data_xx": "d2",
+    "byte_xx": "b",
+    "short_xx1": "s",
+    "short_xx0": "s",
+    "name": "t",
+    "description": "t",
+    "zeros": "d"
 }
 
 item_q = {
@@ -12,8 +33,14 @@ item_q = {
     "character_restriction" : "s",
     "flags" : "t",
     "unknown" : "s",
-    "category" : "b",
-    "data" : "d"
+    "data_1" : "d2",
+    "element": "s",
+    "data_def": "d4",
+    "short_x": "s",
+    "data": "d115",
+    "name": "t",
+    "description": "t",
+    "end": "d",
 }
 
 headers = ["item", "item_q"]
