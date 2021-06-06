@@ -20,7 +20,7 @@ item = {
     "data" : "d54",
     "price?": "s",
     "data_xx": "d2",
-    "byte_xx": "b",
+    "carry_max?": "b",
     "short_xx1": "s",
     "short_xx0": "s",
     "name": "t",
