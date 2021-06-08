@@ -3,15 +3,22 @@ item = {
     "character_restriction" : "s",
     "flags" : "t",
     "type" : "s",
-    "category" : "b",
-    "data_1": "d7",
+    "subtype" : "s",
 
-    "target_type?": "b",
-    "range?": "f",
-    "area?": "b",
-    "float_1?": "f",
-    "float_2?": "f",
-    "float_3?": "f",
+    "element": "b",
+
+    "slash": "b",
+    "thrust": "b",
+    "pierce": "b",
+    "strike": "b",
+    "byte_1": "b", # some weapon attribute
+    "target_type": "b",
+    "range": "f",
+    "area": "b",
+
+    "float_1": "f",
+    "float_2": "f",
+    "float_3": "f",
 
     "effect1_id" : "s",
     "effect1_data1" : "i",
@@ -48,7 +55,7 @@ item = {
     "carry_limit": "b",
     "sort_id": "s",
 
-    "short_xx0": "s",
+    "short_1": "s",
     "name": "t",
     "description": "t",
     "zeros": "d"
