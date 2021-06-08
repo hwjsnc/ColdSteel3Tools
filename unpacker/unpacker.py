@@ -2,8 +2,7 @@ import os, io
 import importlib, collections
 import csv, json, struct
 
-def unpack(path=None, projectName=None):
-    moduleList = ['magic', 'item_en', 'status', 'mons', 'notemons']
+def unpack(path=None, projectName=None, moduleList=('magic', 'item_en', 'status', 'mons', 'notemons')):
     for name in moduleList:
         file = f'{path}/data/text/dat_en/t_{name}.tbl'
         outputPath = f'projects/{projectName}/text/{name}/'
@@ -26,28 +25,27 @@ def unpack(path=None, projectName=None):
 
             data = dataFile.read()
 
-            with open(outputPath + 'summary.json', 'w') as summaryFile:
-                entryNum = 0
-                summary = collections.OrderedDict()
-                summary['total'] = totalEntries
-                for i in range(entryTypeNum):
-                    chunks = data.split(b'\x00', maxsplit=1)
-                    data = io.BytesIO(chunks[1])
-                    entryType = chunks[0].decode('utf-8')
-                    typeLength = int.from_bytes(data.read(2), 'little')
-                    entryNum += typeLength
+            entryNum = 0
+            summary = collections.OrderedDict()
+            summary['total'] = totalEntries
+            for i in range(entryTypeNum):
+                chunks = data.split(b'\x00', maxsplit=1)
+                data = io.BytesIO(chunks[1])
+                entryType = chunks[0].decode('utf-8')
+                typeLength = int.from_bytes(data.read(2), 'little')
+                entryNum += typeLength
 
-                    summary[entryType] = typeLength
+                summary[entryType] = typeLength
 
-                    data.read(2)
-                    data = data.read()
-                
-                if entryNum == totalEntries:
-                    summary['result'] = 'No Error'
-                else:
-                    summary['result'] = 'Header Mismatch'
+                data.read(2)
+                data = data.read()
 
-                json.dump(summary, summaryFile, indent='\t')
+            summary['rows'] = []
+            
+            if entryNum == totalEntries:
+                summary['result'] = 'No Error'
+            else:
+                summary['result'] = 'Header Mismatch'
 
             i = 0
             while i < totalEntries:
@@ -55,6 +53,7 @@ def unpack(path=None, projectName=None):
                 chunks = data.split(b'\x00', maxsplit=1)
                 data = io.BytesIO(chunks[1])
                 header = chunks[0].decode('utf-8')
+                summary["rows"].append(headers.index(header))
                 schema = schemas[headers.index(header)]
                 fieldNames = list(schema.keys())
                 length = int.from_bytes(data.read(2), 'little')
@@ -176,4 +175,8 @@ def unpack(path=None, projectName=None):
                     writer = csv.DictWriter(headerFile, fieldnames=fieldNames)
                     writer.writeheader()
                     writer.writerows(rowList)
+
+            with open(outputPath + 'summary.json', 'w') as summaryFile:
+                json.dump(summary, summaryFile, indent='\t')
+
     print('Unpack Done')
