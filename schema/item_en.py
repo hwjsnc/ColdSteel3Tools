@@ -55,7 +55,6 @@ item = {
     "price": "i",
     "carry_limit": "b",
     "sort_id": "s",
-
     "short_1": "s",
     "name": "t",
     "description": "t",
@@ -64,7 +63,7 @@ item = {
 
 item_q = {
     "id" : "s",
-    "character_restriction" : "s",
+    "short_1" : "s", # not character restriction. unused?
     "flags" : "t",
     "type" : "s",
     "subtype" : "s",
@@ -110,10 +109,10 @@ item_q = {
     "hp": "s",
     "ep": "s",
 
-    "price": "i", # 4 * (mira obtained from selling), not sepith cost
+    "price": "i", # mira obtained from selling times four. (not sepith cost)
     "carry_limit": "b",
     "sort_id": "s",
-    "short_1": "s",
+    "short_2": "s",
     "name": "t",
     "description": "t",
 
@@ -123,12 +122,12 @@ item_q = {
     "prio_mag": "s",
     "prio_spd": "s",
 
-    "art_1": "s",
-    "art_2": "s",
-    "art_3": "s",
-    "art_4": "s",
-    "art_5": "s",
-    "art_6": "s",
+    "art1_id": "s",
+    "art2_id": "s",
+    "art3_id": "s",
+    "art4_id": "s",
+    "art5_id": "s",
+    "art6_id": "s",
 }
 
 headers = ["item", "item_q"]
