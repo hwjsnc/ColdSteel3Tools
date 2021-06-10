@@ -74,7 +74,7 @@ item_q = {
 
     "quartz_type": "b", # normal/status/breaker
     "rating": "f",
-    "area?": "b",
+    "byte_1": "b",
 
     "zeros_2": "d12",
 
@@ -117,7 +117,12 @@ item_q = {
     "name": "t",
     "description": "t",
 
-    "data": "d8",
+    # used for auto-equip
+    "prio_balanced": "s",
+    "prio_phys": "s",
+    "prio_mag": "s",
+    "prio_spd": "s",
+
     "art_1": "s",
     "art_2": "s",
     "art_3": "s",
