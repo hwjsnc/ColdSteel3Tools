@@ -28,10 +28,13 @@ class Frame(tk.Frame):
         projects = [f.name for f in os.scandir('projects') if f.is_dir()]
         self.projectName = tk.StringVar()
         self.entryName = ttk.Combobox(self, textvariable=self.projectName, values=projects, state='readonly')
-        self.entryName.current(0)
+        if projects:
+            self.entryName.current(0)
         self.entryName.grid(column=1, row=2, padx=5, pady=5, sticky='nwse')
         self.btnUnpack = ttk.Button(self, text='Pack', command=self.doPack)
         self.btnUnpack.grid(column=2, row=2, padx=5, pady=5, sticky='nwse')
+        if not projects:
+            self.btnUnpack.state(['disabled'])
 
     
     def selectDirectory(self):
