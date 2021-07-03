@@ -2,10 +2,12 @@ import os
 import importlib
 import csv, json, struct
 
-def pack(path=None, projectName=None, randomizer=False):
+def pack(path=None, projectName=None, randomizer=False, moduleList=None):
     projectDir = f'projects/{projectName}/tmp/text' if randomizer else f'projects/{projectName}/text'
     os.makedirs(f'{path}/data/text/dat_en', exist_ok=True)
-    for name in [f.name for f in os.scandir(projectDir) if f.is_dir() and not f.name.startswith('tmp')]:
+    if moduleList is None:
+        moduleList = [f.name for f in os.scandir(projectDir) if f.is_dir() and not f.name.startswith('tmp')]
+    for name in moduleList:
         file = path + '/data/text/dat_en/t_' + name + '.tbl'
         inputPath = f'{projectDir}/{name}/'
 

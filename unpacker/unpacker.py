@@ -2,8 +2,7 @@ import os, io
 import importlib, collections
 import csv, json, struct
 
-def unpack(path=None, projectName=None):
-    moduleList = ['magic', 'status']
+def unpack(path=None, projectName=None, moduleList=('magic',)):
     for name in moduleList:
         file = f'{path}/data/text/dat_en/t_{name}.tbl'
         outputPath = f'projects/{projectName}/text/{name}/'
